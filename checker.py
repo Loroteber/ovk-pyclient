@@ -23,9 +23,18 @@ def service():
 			elif date == items[0]['date']:
 				service()
 			else:
+				if items[0]['type'] == 'wall':
+					global aa
+					aa = f'Пишет на вашей стене'
+				elif items[0]['type'] == 'copy_post':
+					aa = f'Репостит ваш пост'
+				elif items[0]['type'] == 'comment_post':
+					aa = f'Комментирует ваш пост'
+				elif items[0]['type'] == 'like_post':
+					aa = f'Лайкает ваш пост'
 				date = items[0]['date']
 				link = {'activationType': 'protocol', 'arguments': 'https://ovk.to/notifications?act=new', 'content': 'Открыть'}
-				toast(f'{profiles[0]['first_name']} {profiles[0]['last_name']}', f'will {items[0]['type']}', icon=profiles[0]['photo'], buttons=[link])
+				toast(f'{profiles[0]['first_name']} {profiles[0]['last_name']}', f'{aa}', buttons=[link])
 				service()
 		else:
 			toast('Произошла ошибка!', 'При запросе произошла ошибка, связанная с неправильным токеном. Пожалуйста, войдите в клиент снова.')
